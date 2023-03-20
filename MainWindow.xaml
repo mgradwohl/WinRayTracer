@@ -1,0 +1,66 @@
+﻿<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Window
+    x:Class="WinRayTracer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:local="using:WinRayTracer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    Activated="OnWindowActivate" Closed="OnWindowClosed" SizeChanged="OnWindowResized"  >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="28"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="AppTitleBar" Height="32">
+            <Image Source="Assets/StoreLogo.png" HorizontalAlignment="Left" Width="16" Height="16" Margin="8,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="AppTitleTextBlock" Text="Win Ray Tracer" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" Margin="28,2,0,0"/>
+                <TextBlock x:Name="AppTitlePreview" FontSize="10" Text="PREVIEW" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" Margin="12,2,0,0"/>
+            </StackPanel>
+        </Grid>
+        <SplitView Grid.Row="1" x:Name="splitView" IsPaneOpen="True" MinWidth="200" OpenPaneLength="200" DisplayMode="Inline" Margin="0,6,6,6" PanePlacement="Right"
+               PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4">
+
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="4" >
+                <canvas:CanvasControl x:Name="canvasBoard" Margin="6,0,6,0"
+                                      PointerMoved="OnPointerMoved" PointerReleased="OnPointerReleased"
+                                      PointerPressed="OnPointerPressed" PointerExited="OnPointerExited"
+                                      Draw="CanvasBoard_Draw" CreateResources="CanvasBoard_CreateResources"
+                                      ClearColor="{StaticResource SystemChromeMediumColor}" SizeChanged="CanvasBoard_SizeChanged" />
+            </Grid>
+
+            <SplitView.Pane>
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock Text="MODERN LIFE" x:Name="PaneHeader" HorizontalAlignment="Center" Margin="0,12,0,12" Style="{StaticResource BaseTextBlockStyle}"/>
+                    <AppBarButton HorizontalAlignment="Center" Icon="Pause" x:Name="GoButton"  Label="Pause" Click="GoButton_Click" />
+                    <AppBarButton HorizontalAlignment="Center" Icon="Shuffle" x:Name="RandomizeButton"  Label="Reshuffle" Click="RandomizeButton_Click" />
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
+        <Grid Grid.Row="2" Margin="6,0,6,6" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73E;"/>
+                <TextBlock Margin="6,0,6,0" x:Name="StatusPane_Message" Text="{x:Bind StatusMain, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="3">
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC4A;" />
+                <TextBlock Margin="6,0,6,0" x:Name="StatusPane_FPS" Text="{x:Bind FPSAverage, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="NoWrap" Style="{StaticResource CaptionTextBlockStyle}"></TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

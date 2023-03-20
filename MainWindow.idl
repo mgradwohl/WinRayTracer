@@ -1,0 +1,13 @@
+﻿// Copyright (c) Microsoft Corporation and Contributors.
+// Licensed under the MIT License.
+
+namespace WinRayTracer
+{
+    [default_interface]
+    runtimeclass MainWindow : Microsoft.UI.Xaml.Window, Microsoft.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        MainWindow();
+        String StatusMain{ get; };
+        String FPSAverage{ get; };
+    }
+}
